@@ -1,11 +1,14 @@
 certifi==2024.12.14
 charset-normalizer==3.4.1
+geographiclib==2.0
+geopy==2.4.1
 idna==3.10
 numpy==2.2.2
 numpy-stl==3.2.0
 pyproj==3.7.0
 python-utils==3.9.1
 requests==2.32.3
+scipy==1.15.1
 shapely==2.0.6
 tqdm==4.67.1
 trimesh==4.5.3

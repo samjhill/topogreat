@@ -1,15 +1,15 @@
 import os
-import json
 import numpy as np
 from stl import mesh
 from pyproj import Transformer
 import requests
 import trimesh
-from shapely.geometry import Point, Polygon
 import pickle
 
 import time
 from tqdm import tqdm
+
+from bounding import get_bounding_box_from_address
 
 # Helper: Save and Load Functions
 def save_to_file(data, filename):
@@ -201,14 +201,15 @@ def add_labels_to_mesh(terrain_mesh, pois, scale=1.0, cache_file="app_cache/labe
 
     terrain_mesh.export(cache_file)
     # import pdb; pdb.set_trace()
-    # combined_mesh.export(cache_file)
+    terrain_mesh.export(cache_file)
     print(f"Saved labeled mesh to {cache_file}.")
     return terrain_mesh
 
 
 # Main Workflow
 if __name__ == "__main__":
-    bbox = (-74.5, 40.5, -73.0, 41.5)
+    address = input("please input your address: ")
+    bbox = get_bounding_box_from_address(address)
 
     # Step 1: Get DEM data
     dem_data = fetch_dem_data(bbox, resolution=10)
@@ -219,5 +220,5 @@ if __name__ == "__main__":
     # Step 3: Get POIs
     pois = fetch_pois(bbox, query="landmark")
 
-    # # Step 4: Add labels and save final STL
+    # Step 4: Add labels and save final STL
     labeled_mesh = add_labels_to_mesh(terrain, pois)
